@@ -15,11 +15,16 @@
             "name": "Python: Prime Calculator",
             "type": "python",
             "request": "launch",
-            "program": "${file}",
+            "program": "${workspaceFolder}${pathSeparator}prime.py",
             "console": "integratedTerminal",
-            "args": [
-                "123"
-            ]
+            "args": [ "${input:integerGetterID}" ]
         }
-    ]
+    ],
+    "inputs": [
+        {
+          "id": "integerGetterID",
+          "type": "promptString",
+          "description": "Enter an integer"
+        }
+    ]    
 }
