@@ -11,9 +11,9 @@ def list_stats(some_list):
     return (float(total)/float(len(some_list)), maximum, minimum)
 
 # Just a quick and dirty example to check the above function.
-(total, maximum, minimum) = list_stats([1, 2, 3, 4])
+(average, max, min) = list_stats([1, 2, 3, 4])
 
-print("Average = ", total)
-print("Maximum = ", maximum)
-print("Minimum = ", minimum)
+print("Average = ", average)
+print("Maximum = ", max)
+print("Minimum = ", min)
 

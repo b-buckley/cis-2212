@@ -10,9 +10,6 @@
 #
 # To do:
 #
-# + There is something not quite right about the interactive input section. It seems to print
-#   out extra spaces at the start of each line but the first.
-#
 # + Need to add the ability to get input parameters from the command line.
 #
 # + The duplication of the while loops at the bottom seems bad. Is there a good, Python way of
@@ -28,7 +25,7 @@
 #      Computer Information Systems
 #      Vermont Technical College
 #      Williston, VT 05495
-#      PChapin@vtc.vsc.edu
+#      pchapin@vtc.edu
 ###########################################################################
 
 import sys

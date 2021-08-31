@@ -1,17 +1,4 @@
 #!/usr/bin/python
-###########################################################################
-# FILE      : date.py
-# SUBJECT   : A date class for Python
-# PROGRAMMER: (C) Copyright 2007 by Peter C. Chapin
-#
-# Please send comments or bug reports to
-#
-#      Peter C. Chapin
-#      Computer Information Systems
-#      Vermont Technical College
-#      Williston, VT 05495
-#      PChapin@vtc.vsc.edu
-###########################################################################
 
 # I need this array kicking around.
 month_lengths = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
@@ -25,10 +12,10 @@ class date:
 
     # Returns true if the year associated with this date is a leap year.
     def is_leap(self):
-        result = 0
-        if                (self.Y %   4) == 0: result = 1
-        if     result and (self.Y % 100) == 0: result = 0
-        if not result and (self.Y % 400) == 0: result = 1
+        result = False
+        if                (self.Y %   4) == 0: result = True
+        if     result and (self.Y % 100) == 0: result = False
+        if not result and (self.Y % 400) == 0: result = True
         return result
 
 
