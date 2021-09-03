@@ -1,17 +1,19 @@
 #!/usr/bin/python
 
+from _typeshed import NoneType
+
 # I need this array kicking around.
 month_lengths = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
 class Date:
 
     # The constructor sets the date to the given date..
-    def __init__(self, day, month, year):
+    def __init__(self, day: int, month: int, year: int ):
         self.set(day, month, year)
 
 
     # Returns true if the year associated with this date is a leap year.
-    def is_leap(self):
+    def is_leap(self) -> bool:
         result = False
         if                (self.Y %   4) == 0: result = True
         if     result and (self.Y % 100) == 0: result = False
@@ -20,7 +22,7 @@ class Date:
 
 
     # Returns the number of days in the month associated with this date.
-    def month_length(self):
+    def month_length(self) -> int:
         length = month_lengths[self.M - 1]
         if self.M == 2 and self.is_leap():
             length = length + 1
@@ -29,7 +31,7 @@ class Date:
 
 
     # Sets the date object to the given date. Very useful.
-    def set(self, day, month, year):
+    def set(self, day: int, month: int, year: int) -> NoneType:
 
         # Set the members according to what we are given.
         self.D = day
@@ -58,7 +60,7 @@ class Date:
 
 
     # Advance the date by one day.
-    def next(self):
+    def next(self) -> NoneType:
         self.D = self.D + 1
         if self.D > self.month_length():
             self.D = 1
@@ -69,7 +71,7 @@ class Date:
 
 
     # Back up the date by one day.
-    def previous(self):
+    def previous(self) -> NoneType:
         fix_day = 0
 
         self.D = self.D - 1
@@ -84,7 +86,7 @@ class Date:
 
 
     # Advance the date by the given number of days.
-    def advance(self, delta):
+    def advance(self, delta: int) -> NoneType:
 
         # If there is nothing to do, bail out.
         if delta == 0: return
@@ -103,7 +105,7 @@ class Date:
 #
 
 # Returns -1 if d1 is before d2, 0 if d1 == d2, and +1 if d1 is after d2.
-def compare(d1, d2):
+def compare(d1: Date, d2: Date) -> int:
 
     if d1.Y < d2.Y: return -1
     if d1.Y > d2.Y: return +1
@@ -118,7 +120,7 @@ def compare(d1, d2):
 
 
 # Returns the number of days d1 is after d2
-def difference(d1, d2):
+def difference(d1: Date, d2: Date) -> int:
     result = 0
 
     # What is their relationship?
