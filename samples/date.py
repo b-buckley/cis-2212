@@ -3,7 +3,7 @@
 # I need this array kicking around.
 month_lengths = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
-class date:
+class Date:
 
     # The constructor sets the date to the given date..
     def __init__(self, day, month, year):
@@ -128,8 +128,8 @@ def difference(d1, d2):
     if relation == 0: return 0
 
     # Make copies. Is there a better way to do this?
-    tempD1 = date(d1.D, d1.M, d1.Y)
-    tempD2 = date(d2.D, d2.M, d2.Y)
+    tempD1 = Date(d1.D, d1.M, d1.Y)
+    tempD2 = Date(d2.D, d2.M, d2.Y)
 
     # Man, this is ugly!
     while compare(tempD1, tempD2) == 1:
@@ -144,6 +144,6 @@ def difference(d1, d2):
 
 # Test code.
 if __name__ == "__main__":
-    d = date(28, 2, 2000)
+    d = Date(28, 2, 2000)
     d.next()
     print("%04d-%02d-%02d" % (d.Y, d.M, d.D))
