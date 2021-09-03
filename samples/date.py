@@ -1,19 +1,26 @@
 #!/usr/bin/python
 
-from _typeshed import NoneType
-
 # I need this array kicking around.
 month_lengths = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
 class Date:
+    """A class for manipulating calendar dates
+
+    Instances of this class represent dates between the years 1800 and 2099 (inclusive). Simple methods and supporting functions are provided to advance a date forward or backward, compare dates, and compute the difference between two dates.
+
+    This class is intended to be primarly educational. Thus it may not illustrate all appropriate best practices (so as to avoid creating a class that is overwhelming to the newcomer). However, this class is continuously evolving and may become progressively more useful in the future. Note, however, that the Python library already contains modules for date manipulation that may be more appropriate to use in a real program.
+    """
 
     # The constructor sets the date to the given date..
     def __init__(self, day: int, month: int, year: int ):
         self.set(day, month, year)
 
 
-    # Returns true if the year associated with this date is a leap year.
     def is_leap(self) -> bool:
+        """Returns true if the year associated with self is a leap year.
+        
+        This method implements the full leap year rules of the Gregorian calendar. It is necessary to do this because the year 2000, which is in the range of supported dates, requires all of the rules in order to be handled correctly.
+        """
         result = False
         if                (self.Y %   4) == 0: result = True
         if     result and (self.Y % 100) == 0: result = False
@@ -26,12 +33,17 @@ class Date:
         length = month_lengths[self.M - 1]
         if self.M == 2 and self.is_leap():
             length = length + 1
-
         return length
 
 
     # Sets the date object to the given date. Very useful.
-    def set(self, day: int, month: int, year: int) -> NoneType:
+    def set(self, day: int, month: int, year: int) -> None:
+        """Sets the date object to the given date.
+        
+        This method attempts to check the sensibilty of the given date. In particular, a two digit year is converted to a four digit year in the range 1950 to 2049 (e. g., a year of '97' becomes 1997 and a year of '35' becomes 2035). This method also forces the year into the range from 1800 to 2099 by silently truncating out of range years. Finally, it forces the day and month into sensible ranges.
+
+        This method should probably raise an exception for out of range years and for invalid dates. It currently accepts dates such as February 30, 2020 because '30' is generally in range for months even if not for February. It should raise an exception for that sort of invalidity as well.
+        """
 
         # Set the members according to what we are given.
         self.D = day
@@ -60,7 +72,7 @@ class Date:
 
 
     # Advance the date by one day.
-    def next(self) -> NoneType:
+    def next(self) -> None:
         self.D = self.D + 1
         if self.D > self.month_length():
             self.D = 1
@@ -71,7 +83,7 @@ class Date:
 
 
     # Back up the date by one day.
-    def previous(self) -> NoneType:
+    def previous(self) -> None:
         fix_day = 0
 
         self.D = self.D - 1
@@ -86,7 +98,7 @@ class Date:
 
 
     # Advance the date by the given number of days.
-    def advance(self, delta: int) -> NoneType:
+    def advance(self, delta: int) -> None:
 
         # If there is nothing to do, bail out.
         if delta == 0: return
@@ -104,9 +116,8 @@ class Date:
 # This is the end of the class definition. What follows are normal functions.
 #
 
-# Returns -1 if d1 is before d2, 0 if d1 == d2, and +1 if d1 is after d2.
+# Returns -1 if d1 is before d2, 0 if d1 = d2, and +1 if d1 is after d2.
 def compare(d1: Date, d2: Date) -> int:
-
     if d1.Y < d2.Y: return -1
     if d1.Y > d2.Y: return +1
 
@@ -115,7 +126,6 @@ def compare(d1: Date, d2: Date) -> int:
 
     if d1.D < d2.D: return -1
     if d1.D > d2.D: return +1
-
     return 0
 
 
@@ -144,8 +154,10 @@ def difference(d1: Date, d2: Date) -> int:
 
     return result
 
-# Test code.
+# Test/Demonstration code. More complete testing is needed.
 if __name__ == "__main__":
     d = Date(28, 2, 2000)
     d.next()
+    print("%04d-%02d-%02d" % (d.Y, d.M, d.D))
+    d.set(3, 9, 2021)
     print("%04d-%02d-%02d" % (d.Y, d.M, d.D))
