@@ -43,9 +43,7 @@ class Date:
     def set(self, day: int, month: int, year: int) -> None:
         """Sets this date to the given date.
         
-        This method attempts to check the sensibilty of the given date. In particular, a two digit year is converted to a four digit year in the range 1950 to 2049 (e. g., a year of '97' becomes 1997 and a year of '35' becomes 2035). This method also forces the year into the range from 1800 to 2099 by silently truncating out of range years. Finally, it forces the day and month into sensible ranges.
-
-        This method should probably raise an exception for out of range years and for invalid dates. It currently accepts dates such as February 30, 2020 because '30' is generally in range for months even if not for February. It should raise an exception for that sort of invalidity as well.
+        This method attempts to check the sensibilty of the given date. In particular, a two digit year is converted to a four digit year in the range 1950 to 2049 (e. g., a year of '97' becomes 1997 and a year of '35' becomes 2035). This method will raise an exception if an attempt is made to set the date outside of the year range from 1800 to 2099 inclusive, or if an invalid date is specified.
         """
 
         # Set the members according to what we are given.
@@ -110,12 +108,16 @@ class Date:
         if delta == 0: return
 
         # Otherwise do real work.
-        if delta > 0:
-            for i in range(1, delta + 1):
-                self.next()
-        else:
-            for i in range(1, -delta + 1):
-                self.previous()
+        try:
+            if delta > 0:
+                for i in range(1, delta + 1):
+                    self.next()
+            else:
+                for i in range(1, -delta + 1):
+                    self.previous()
+        except InvalidDate:
+            raise InvalidDate("invalid date after 'advance'")
+
 
     # Relational Operators
     # --------------------
@@ -168,11 +170,8 @@ def compare(d1: Date, d2: Date) -> int:
 def difference(d1: Date, d2: Date) -> int:
     result = 0
 
-    # What is their relationship?
-    relation = compare(d1, d2)
-
     # Handle the simple case first.
-    if relation == 0: return 0
+    if compare(d1, d2) == 0: return 0
 
     # Make copies. Is there a better way to do this?
     tempD1 = Date(d1.D, d1.M, d1.Y)
@@ -188,6 +187,7 @@ def difference(d1: Date, d2: Date) -> int:
         result = result - 1
 
     return result
+
 
 # Test/Demonstration code. More complete testing is needed.
 if __name__ == "__main__":
